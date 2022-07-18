@@ -9,15 +9,25 @@ namespace Labirint
         [SerializeField] private Player _player;
 
         private InputController _controller;
+        private ListExecuteObjects _executeObjects;
+        IEnumerator enumerator;
 
         private void Awake()
         {
             _controller = new InputController(_player);
+            _executeObjects = new ListExecuteObjects();
+            _executeObjects.AddExecuteObject(_controller);
+            _executeObjects.GetEnumerator();
         }
 
         private void Update()
         {
-            _controller.Update();
+            while (_executeObjects.MoveNext())
+            {
+                _executeObjects.CurrentExecute.Update();
+            }
+               
+            _executeObjects.Reset();
         }
     }
 }

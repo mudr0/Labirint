@@ -519,7 +519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transform: {fileID: 0}
   _rb: {fileID: 0}
-  _speed: 5
+  _speed: 2
   _health: 100
   _isDead: 0
 --- !u!54 &99532517

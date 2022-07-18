@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Labirint
 {
-    public class InputController
+    public class InputController : IExecute
     {
         private Unit _player;
 
