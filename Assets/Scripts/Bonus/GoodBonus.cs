@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +8,20 @@ namespace Labirint
     {
         [SerializeField] private float _flyHeight;
         [SerializeField] private float _rotationSpeed;
+        [SerializeField] private int _pointValue = 1;
+
+        public Action<int> OnAddPoint = delegate (int i) { };
+
+        public override void Awake()
+        {
+            base.Awake();
+        }
+
+        public override void Update()
+        {
+            Fly();
+            Rotate();
+        }
 
         public void Fly()
         {
@@ -19,10 +33,9 @@ namespace Labirint
             transform.Rotate(Vector3.up * Time.deltaTime * _rotationSpeed, Space.World);
         }
 
-        private void Update()
+        protected override void Interaction()
         {
-            Fly();
-            Rotate();
+            OnAddPoint?.Invoke(_pointValue);
         }
     }
 }

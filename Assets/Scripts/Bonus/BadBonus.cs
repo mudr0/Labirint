@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,14 +7,14 @@ namespace Labirint
     public class BadBonus : Bonus, IFly, IFlick
     {
         [SerializeField] private float _flyHeight;
-        [SerializeField] private float _flickRate;
 
-        private float _timer = 0;
-        private MeshRenderer _renderer;
+        public event Action OnGameOver = delegate { };
+        private Material _material;
 
-        private void Awake()
+        public override void Awake()
         {
-            _renderer = GetComponent<MeshRenderer>();
+            base.Awake();
+            _material = Renderer.material;
         }
 
         public void Fly()
@@ -24,21 +24,18 @@ namespace Labirint
 
         public void Flick()
         {
-            if (_renderer.enabled)
-                _renderer.enabled = false;
-            else
-                _renderer.enabled = true;
+            _material.color = new Color(_material.color.r, _material.color.g, _material.color.b, Mathf.PingPong(Time.time, 1));
         }
 
-        private void Update()
+        public override void Update()
         {
             Fly();
-            _timer += Time.deltaTime;
-            if (_timer >= _flickRate)
-            {
-                Flick();
-                _timer = 0;
-            }
+            Flick();
+        }
+
+        protected override void Interaction()
+        {
+            OnGameOver?.Invoke();
         }
     }
 }

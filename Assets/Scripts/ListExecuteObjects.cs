@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Labirint {
     public class ListExecuteObjects : IEnumerable, IEnumerator
@@ -15,7 +16,14 @@ namespace Labirint {
 
         public ListExecuteObjects() 
         {
-            
+            Bonus[] bonusObg = Object.FindObjectsOfType<Bonus>();
+            for (int i = 0; i < bonusObg.Length; i++)
+            {
+                if(bonusObg[i] is IExecute intObject)
+                {
+                    AddExecuteObject(intObject);
+                }
+            }
         }
 
         public void AddExecuteObject(IExecute execute)
