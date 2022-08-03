@@ -10,11 +10,17 @@ namespace Labirint
         [SerializeField] private float _rotationSpeed;
         [SerializeField] private int _pointValue = 1;
 
+        private SObject _bonusData;
+        private ISaveData _data;
+
         public Action<int> OnAddPoint = delegate (int i) { };
 
         public override void Awake()
         {
             base.Awake();
+            _data = new JSONData();
+            _bonusData = new SObject(this.gameObject);
+            _data.SaveData(_bonusData);
         }
 
         public override void Update()
