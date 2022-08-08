@@ -6,6 +6,7 @@ namespace Labirint
 {
     public abstract class Bonus : MonoBehaviour, IExecute
     {
+        [SerializeField] private Renderer _mapPoint;
         private bool _isInteractable;
         private Renderer _renderer;
         private Collider _collider;
@@ -18,6 +19,7 @@ namespace Labirint
                 _isInteractable = value;
                 Renderer.enabled = value;
                 _collider.enabled = value;
+                _mapPoint.enabled = value;
             }
 
         }
